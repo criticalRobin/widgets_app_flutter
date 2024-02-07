@@ -17,6 +17,8 @@ class AppTheme {
       : assert(selectedColor >= 0 && selectedColor <= appColors.length,
             "Selected color must be 0 or greater than 0 and lower than ${appColors.length}");
 
-  ThemeData getTheme() =>
-      ThemeData(useMaterial3: true, colorSchemeSeed: appColors[selectedColor]);
+  ThemeData getTheme() => ThemeData(
+      useMaterial3: true,
+      colorSchemeSeed: appColors[selectedColor],
+      appBarTheme: const AppBarTheme(centerTitle: false));
 }
