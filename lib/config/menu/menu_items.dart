@@ -24,4 +24,9 @@ const List<MenuItem> appMenuItems = [
       subTitle: "Varios tipos de tarjetas",
       link: "/cards",
       icon: Icons.credit_card_outlined),
+  MenuItem(
+      title: "Indicadores de Progreso",
+      subTitle: "Generales y Controlados",
+      link: "/progress",
+      icon: Icons.refresh_rounded)
 ];
