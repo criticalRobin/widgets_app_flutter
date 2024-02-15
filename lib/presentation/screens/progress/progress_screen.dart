@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class ProgressScreen extends StatelessWidget {
@@ -38,7 +40,7 @@ class _ProgressView extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          Text("Circular Controled Indicator"),
+          Text("Circular and Linear Controled Indicator"),
           SizedBox(
             height: 10,
           ),
@@ -54,6 +56,34 @@ class _ControlledProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return StreamBuilder<Object>(
+        stream: Stream.periodic(const Duration(milliseconds: 300), (value) {
+          return (value * 2) / 100;
+        }).takeWhile((value) => value < 100),
+        builder: (context, snapshot) {
+          final double streamValue =
+              double.parse(snapshot.data.toString());
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(
+                  value: streamValue,
+                  strokeWidth: 2,
+                  backgroundColor: Colors.black45,
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                    child: LinearProgressIndicator(
+                  value: streamValue,
+                ))
+              ],
+            ),
+          );
+        });
   }
 }
