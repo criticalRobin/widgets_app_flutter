@@ -34,4 +34,9 @@ const List<MenuItem> appMenuItems = [
       subTitle: "Snacks y Diálogos",
       link: "/snack",
       icon: Icons.remove_red_eye_outlined),
+  MenuItem(
+      title: "Contenedores Animados",
+      subTitle: "Contenedores",
+      link: "/container",
+      icon: Icons.square_sharp),
 ];

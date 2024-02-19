@@ -7,6 +7,25 @@ class AnimatedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Animated Screen"),
+      ),
+      body: Center(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOutCubic,
+          width: 150,
+          height: 200,
+          decoration: BoxDecoration(
+              color: Colors.lime,
+              borderRadius: BorderRadiusDirectional.circular(20)),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.play_arrow_rounded),
+      ),
+    );
   }
 }
