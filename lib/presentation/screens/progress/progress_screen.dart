@@ -61,8 +61,9 @@ class _ControlledProgressIndicator extends StatelessWidget {
           return (value * 2) / 100;
         }).takeWhile((value) => value < 100),
         builder: (context, snapshot) {
-          final double streamValue =
-              double.parse(snapshot.data.toString());
+          final double streamValue = snapshot.data != null
+              ? double.parse(snapshot.data.toString())
+              : 0;
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
