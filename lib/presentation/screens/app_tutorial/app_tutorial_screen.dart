@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,34 +19,81 @@ final slides = <SlideInfo>[
       "Disfuta la comida", "Enamórate con el sabor", "assets/images/3.png"),
 ];
 
-class AppTutorialScreen extends StatelessWidget {
+class AppTutorialScreen extends StatefulWidget {
   static const name = "app_tutorial_screen";
 
   const AppTutorialScreen({super.key});
 
   @override
+  State<AppTutorialScreen> createState() => _AppTutorialScreenState();
+}
+
+class _AppTutorialScreenState extends State<AppTutorialScreen> {
+  PageController pageviewController = PageController();
+  bool isLastPage = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    pageviewController.addListener(() {
+      final page = pageviewController.page ?? 0;
+
+      if (!isLastPage && page > slides.length - 1.5) {
+        setState(() {
+          isLastPage = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    pageviewController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            PageView(
-              children: slides
-                  .map((slidesData) => _Slide(
-                      title: slidesData.title,
-                      caption: slidesData.caption,
-                      imageUrl: slidesData.imageUrl))
-                  .toList(),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          PageView(
+            controller: pageviewController,
+            children: slides
+                .map((slidesData) => _Slide(
+                    title: slidesData.title,
+                    caption: slidesData.caption,
+                    imageUrl: slidesData.imageUrl))
+                .toList(),
+          ),
+          Positioned(
+            right: 20,
+            top: 50,
+            child: TextButton(
+              onPressed: () => context.pop(),
+              child: const Text("Saltar"),
             ),
-            Positioned(
-                right: 20,
-                top: 50,
-                child: TextButton(
-                  onPressed: () => context.pop(),
-                  child: const Text("Saltar"),
-                )),
-          ],
-        ));
+          ),
+          isLastPage
+              ? Positioned(
+                  bottom: 30,
+                  right: 30,
+                  child: FadeInRight(
+                    from: 15,
+                    duration: const Duration(seconds: 2),
+                    child: FilledButton(
+                      child: const Text("Comenzar"),
+                      onPressed: () => context.pop(),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
+        ],
+      ),
+    );
   }
 }
 
