@@ -44,4 +44,9 @@ const List<MenuItem> appMenuItems = [
       subTitle: "Controles y Tiles",
       link: "/controls",
       icon: Icons.car_rental_outlined),
+  MenuItem(
+      title: "Tutorial de la App",
+      subTitle: "Tutorial",
+      link: "/tutorial",
+      icon: Icons.school_outlined),
 ];
