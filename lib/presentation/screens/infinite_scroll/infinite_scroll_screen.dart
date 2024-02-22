@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -59,6 +60,21 @@ class _InifiniteScrollScreenState extends State<InifiniteScrollScreen> {
     imageIDs.addAll([1, 2, 3, 4, 5].map((id) => lastId + id));
   }
 
+  Future<void> onRefresh() async {
+    isLoading = true;
+    setState(() {});
+    await Future.delayed(const Duration(seconds: 3));
+
+    if (!isMounted) return;
+    isLoading = false;
+    final lastImage = imageIDs.last;
+    imageIDs.clear();
+    imageIDs.add(lastImage + 1);
+    addFiveImages();
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,25 +82,49 @@ class _InifiniteScrollScreenState extends State<InifiniteScrollScreen> {
         context: context,
         removeBottom: true,
         removeTop: true,
-        child: ListView.builder(
-          controller: scrollController,
-          itemCount: imageIDs.length,
-          itemBuilder: (context, index) {
-            return FadeInImage(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 300,
-              placeholder: const AssetImage("assets/images/jar-loading.gif"),
-              image: NetworkImage(
-                  "https://picsum.photos/id/${imageIDs[index]}/500/300"),
-            );
-          },
+        child: RefreshIndicator(
+          edgeOffset: 10,
+          strokeWidth: 2,
+          onRefresh: onRefresh,
+          child: _ListViewBuilder(
+              scrollController: scrollController, imageIDs: imageIDs),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.pop(),
-        child: const Icon((Icons.arrow_back)),
+        child: isLoading
+            ? SpinPerfect(
+                infinite: true, child: const Icon(Icons.refresh_rounded))
+            : FadeIn(child: const Icon((Icons.arrow_back))),
       ),
+    );
+  }
+}
+
+class _ListViewBuilder extends StatelessWidget {
+  const _ListViewBuilder({
+    required this.scrollController,
+    required this.imageIDs,
+  });
+
+  final ScrollController scrollController;
+  final List<int> imageIDs;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: imageIDs.length,
+      itemBuilder: (context, index) {
+        return FadeInImage(
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: 300,
+          placeholder: const AssetImage("assets/images/jar-loading.gif"),
+          image: NetworkImage(
+              "https://picsum.photos/id/${imageIDs[index]}/500/300"),
+        );
+      },
     );
   }
 }
