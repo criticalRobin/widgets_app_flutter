@@ -24,4 +24,34 @@ const List<MenuItem> appMenuItems = [
       subTitle: "Varios tipos de tarjetas",
       link: "/cards",
       icon: Icons.credit_card_outlined),
+  MenuItem(
+      title: "Indicadores de Progreso",
+      subTitle: "Generales y Controlados",
+      link: "/progress",
+      icon: Icons.refresh_rounded),
+  MenuItem(
+      title: "Snackbars y Diálogos",
+      subTitle: "Snacks y Diálogos",
+      link: "/snack",
+      icon: Icons.remove_red_eye_outlined),
+  MenuItem(
+      title: "Contenedores Animados",
+      subTitle: "Contenedores",
+      link: "/container",
+      icon: Icons.square_sharp),
+  MenuItem(
+      title: "UI Cotrols + Tiles",
+      subTitle: "Controles y Tiles",
+      link: "/controls",
+      icon: Icons.car_rental_outlined),
+  MenuItem(
+      title: "Tutorial de la App",
+      subTitle: "Tutorial",
+      link: "/tutorial",
+      icon: Icons.school_outlined),
+      MenuItem(
+      title: "Scroll Infinito",
+      subTitle: "Scroll",
+      link: "/scroll",
+      icon: Icons.list_alt_outlined),
 ];
