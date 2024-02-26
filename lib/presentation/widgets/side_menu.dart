@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets_app/config/menu/menu_items.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({super.key});
@@ -12,6 +13,8 @@ class _SideMenuState extends State<SideMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final hasNotch = MediaQuery.of(context).padding.top > 25;
+
     return NavigationDrawer(
       selectedIndex: navDrawerIndex,
       onDestinationSelected: (value) {
@@ -19,15 +22,31 @@ class _SideMenuState extends State<SideMenu> {
           navDrawerIndex = value;
         });
       },
-      children: const [
-        NavigationDrawerDestination(
-          icon: Icon(Icons.shop_2_rounded),
-          label: Text("Compra papu"),
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(28, hasNotch ? 0 : 20, 16, 10),
+          child: const Text("Menú Principal"),
         ),
-        NavigationDrawerDestination(
-          icon: Icon(Icons.sell_sharp),
-          label: Text("Vende papu"),
+        ...appMenuItems.sublist(0, 3).map(
+              (item) => NavigationDrawerDestination(
+                icon: Icon(item.icon),
+                label: Text(item.title),
+              ),
+            ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+          child: Divider(),
         ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 10, 16, 10),
+          child: Text("Menú Secundario"),
+        ),
+        ...appMenuItems.sublist(3).map(
+              (item) => NavigationDrawerDestination(
+                icon: Icon(item.icon),
+                label: Text(item.title),
+              ),
+            ),
       ],
     );
   }
