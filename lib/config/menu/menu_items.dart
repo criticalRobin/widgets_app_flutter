@@ -59,4 +59,9 @@ const List<MenuItem> appMenuItems = [
       subTitle: "Scroll",
       link: "/scroll",
       icon: Icons.list_alt_outlined),
+  MenuItem(
+      title: "Cambio de Tema",
+      subTitle: "Temas",
+      link: "/theme",
+      icon: Icons.theater_comedy_outlined),
 ];
