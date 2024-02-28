@@ -21,4 +21,13 @@ final themeNotifierProvider =
 class ThemeNotifier extends StateNotifier<AppTheme> {
   // The constructor initializes the state with the default 'AppTheme'.
   ThemeNotifier() : super(AppTheme());
+
+  // This method is used to toggle the dark mode of the app.
+  void toggleDarkMode() {
+    state = state.copyWith(isDarkMode: !state.isDarkMode);
+  }
+
+  void changeColor(int colorIndex) {
+    state = state.copyWith(selectedColor: colorIndex);
+  }
 }
